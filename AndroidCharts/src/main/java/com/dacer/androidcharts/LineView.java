@@ -191,6 +191,10 @@ public class LineView extends View {
                 for(Integer i:list){
                     if(biggestData<i){
                         biggestData = i;
+                        maxValue = i;
+                    }
+                    if(minValue>i){
+                    	minValue = i;
                     }
                 }
         	}
@@ -214,6 +218,7 @@ public class LineView extends View {
         refreshDrawDotList(verticalGridNum);
     }
 
+    private int minValue = 0, maxValue = 0;
     private int getVerticalGridlNum(){
         int verticalGridNum = MIN_VERTICAL_GRID_NUM;
         if(dataLists != null && !dataLists.isEmpty()){
@@ -224,6 +229,7 @@ public class LineView extends View {
 	        		}
 	        	}
         	}
+        	verticalGridNum = maxValue - minValue + 1;
         }
         return verticalGridNum;
     }
@@ -265,7 +271,7 @@ public class LineView extends View {
         		
         		for(int i=0;i<dataLists.get(k).size();i++){
                     int x = xCoordinateList.get(i);
-                    int y = yCoordinateList.get(verticalGridNum - dataLists.get(k).get(i));
+                    int y = yCoordinateList.get(verticalGridNum - dataLists.get(k).get(i) + minValue);
                     if(i>drawDotSize-1){
                     	//도트리스트를 추가한다.
                         drawDotLists.get(k).add(new Dot(x, 0, x, y, dataLists.get(k).get(i),k));
